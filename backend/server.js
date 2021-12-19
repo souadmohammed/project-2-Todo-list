@@ -22,7 +22,30 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/tasks',(req,res)=>{
-    res.json('Get / is working ');
+    Todo.find({},(err,data)=>{
+        if(err){
+            console.log('ERROR : ', err);
+        }else{
+            res.json(data);
+        }
+
+    })
+    //res.json('Get / is working ');
+})
+
+app.post('/tasks',(req,res)=>{
+    console.log('25:',req.body);
+
+    Todo.create(req.body,(err,newTask)=>{
+        if(err){
+            console.log('ERROR : ', err);
+        }else{
+            res.status(201).json('created new Todo successfully')
+            //res.json(newTask);
+        }
+
+    })
+    //res.json('Get / is working ');
 })
 
 app.listen(port,()=>{
