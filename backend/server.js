@@ -85,6 +85,7 @@ app.post('/tasks',(req,res)=>{
 
 // احط بالبارمز اسم اليوزر الي حأعمله حذف
 //يرجع رسبونس واحد 
+// DELETE BY TITLE
 app.delete("/tasks/:title", (req, res) => {
     console.log(req.params);
     //     الشرط    key : value
@@ -104,6 +105,24 @@ app.delete("/tasks/:title", (req, res) => {
     });
   });
 
+// DELETE BY ID
+  app.delete("/tasks/id/:id", (req, res) => {
+    console.log(req.params.id);
+    //     الشرط    key : value              بارميتر يعبر عن الي صار
+    Todo.deleteOne({ _id: req.params.id }, (err, deleteObj) => {
+      if (err) {
+        console.log("ERROR", err);
+        res.status(500).json("there is a problem in DB");
+      } else {
+        // اذا دورت ومالقت اي واحد بدا الاسم
+        console.log(deleteObj)
+        deleteObj.deletedCount === 0? res.status(404).json("id is  Not Found") 
+        :res.status(200).json("Success Delete  this Todo" + req.params.id)
+         
+        
+      }
+    });
+  });
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -117,6 +136,8 @@ app.delete("/tasks/:title", (req, res) => {
  */
 // Extension: Prettier  ||  Shortcut: Alt + Shift + F
 // حطينا / قبل الافنيم عشانها مو متغير والقيمه حتكون في البدي حق الريكويست
+
+// UPDATE STATE
 app.put("/tasks/isCompleted/:oldState", (req, res) => {
     console.log(req.params);
     Todo.updateOne(
@@ -138,6 +159,33 @@ app.put("/tasks/isCompleted/:oldState", (req, res) => {
       }
     );
   });
+
+//UPDATE THE TITLE OF TASK 
+app.put("/tasks/title/:id", (req, res) => {
+    console.log(req.params.id);
+
+    Todo.pdateOne(
+      { _id: req.params.id }, // filter «Object» الشرط
+      { title: req.body.newTitle }, //update «Object|Array»
+      (err, updateObj) => {
+        //callback func
+        if (err) {
+          console.log("ERROR", err);
+          res.status(400).json("there is a problem in DB");
+        } else {
+          console.log(updateObj);
+          if (updateObj.matchedCount === 0) {
+            res.status(404).json("User Not Found");
+          } else {
+            res.status(200).json("Success Update one state");
+          }
+        }
+      }
+    );
+  });
+
+
+  
 app.listen(port,()=>{
     console.log('SERVER IS WORKING');
 })
