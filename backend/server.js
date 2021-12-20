@@ -18,6 +18,7 @@ app.use(express.json())
 //
 
 
+// CRUD: Creat , Read , Update , Delete
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -56,6 +57,21 @@ app.get('/tasks',(req,res)=>{
     //res.json('Get / is working ');
 })
 
+// get Completed tasks from db
+app.get('/tasks/completed',(req,res)=>{
+    Todo.find({isCompleted:true},(err,data)=>{
+        err ? console.log('ERROR : ', err):res.json(data)
+    }) 
+})
+
+// get not Completed tasks from db
+app.get('/tasks/notCompleted',(req,res)=>{
+    Todo.find({isCompleted:false},(err,data)=>{
+        err ? console.log('ERROR : ', err):res.json(data)
+    }) 
+})
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //add new element in the db get data from req.body of post (must use middleware which is read the body of req)
 app.post('/tasks',(req,res)=>{
@@ -74,8 +90,12 @@ app.post('/tasks',(req,res)=>{
 })
 
 
-//delete
 
+
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//delete
 /**
  * Deletes the first document that matches conditions
  * from the collection. It returns an object with the
@@ -124,8 +144,13 @@ app.delete("/tasks/:title", (req, res) => {
     });
   });
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
+
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//put
 /**
  * MongoDB will update only the first document that matches 
  * filter regardless of the value of the multi option.
