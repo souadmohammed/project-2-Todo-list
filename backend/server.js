@@ -71,6 +71,17 @@ app.get('/tasks/notCompleted',(req,res)=>{
     }) 
 })
 
+
+// this endpoint is replace to these two
+// get notCompleted / Completed tasks from db
+app.get('/filter',(req,res)=>{
+    console.log(req.query);
+    Todo.find({isCompleted:req.query.isCompleted},(err,data)=>{
+        err ? console.log('ERROR : ', err):res.json(data)
+    }) 
+})
+
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //add new element in the db get data from req.body of post (must use middleware which is read the body of req)
