@@ -156,7 +156,23 @@ app.delete("/tasks/:title", (req, res) => {
   });
 
 
-
+  app.delete("/deleteCompleted", (req, res) => {
+    
+    Todo.deleteMany({ isCompleted: true}, (err, deleteObj) => {
+      if (err) {
+        console.log("ERROR", err);
+        res.status(500).json("there is a problem in DB");
+      } else {
+        // اذا دورت ومالقت اي واحد بدا الاسم
+        // console.log(deleteObj)
+        if (deleteObj.deletedCount === 0) {
+          res.status(404).json("There is no completed Todo task  Not Found");
+        } else {
+          res.status(200).json("Success Deleted All Completed Todo Task " + deleteObj.deletedCount);
+        }
+      }
+    });
+  }); 
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -168,16 +184,16 @@ app.delete("/tasks/:title", (req, res) => {
       res.modifiedCount; // Number of documents modified
       res.upsertedCount; // Number indicating how many documents had to be upserted. Will either be 0 or 1.
 
- */
+ */ 
 // Extension: Prettier  ||  Shortcut: Alt + Shift + F
 // حطينا / قبل الافنيم عشانها مو متغير والقيمه حتكون في البدي حق الريكويست
 
 // UPDATE STATE
-app.put("/tasks/isCompleted/:oldState", (req, res) => {
-    console.log(req.params);
+app.put("/tasks/:id/:isCompleted", (req, res) => {
+    console.log("1213",req.params);
     Todo.updateOne(
-      { title: req.params.oldState }, // filter «Object» الشرط
-      { isCompleted: req.body.isCompleted }, //update «Object|Array»
+      { _id: req.params.id }, // filter «Object» الشرط
+      { isCompleted: req.params.isCompleted }, //update «Object|Array»
       (err, updateObj) => {
         //callback func
         if (err) {
@@ -186,9 +202,9 @@ app.put("/tasks/isCompleted/:oldState", (req, res) => {
         } else {
           console.log(updateObj);
           if (updateObj.matchedCount === 0) {
-            res.status(404).json("User Not Found");
+            res.status(404).json("Task Not Found");
           } else {
-            res.status(200).json("Success Update one state");
+            res.status(200).json("Success Update one Todo Task");
           }
         }
       }
@@ -210,9 +226,9 @@ app.put("/tasks/title/:id", (req, res) => {
         } else {
           console.log(updateObj);
           if (updateObj.matchedCount === 0) {
-            res.status(404).json("User Not Found");
+            res.status(404).json("Task Not Found");
           } else {
-            res.status(200).json("Success Update one state");
+            res.status(200).json("Success Update one Todo Task");
           }
         }
       }
