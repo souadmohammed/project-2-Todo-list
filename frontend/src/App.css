@@ -8,9 +8,17 @@
 .Todo{
   border: #fba961;
   border-style:solid;
+
 }
 
+.Todo span{
+  margin: 0px 30px 0px 0px;
+}
 
+.Add{
+  border: #685618;
+  border-style:solid;
+}
 
 
 .App-header {
