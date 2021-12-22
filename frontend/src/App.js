@@ -47,9 +47,11 @@ function App() {
       });
   };
 
+
+
   const deleteTodo = (id) => {
     axios
-      .delete(`http://localhost:5000/tasks/${id}`)
+      .delete(`http://localhost:5000/tasks/id/${id}`)
       //     (`http://localhost:5000/tasks/${id}`)
       .then((response) => {
         // console.log('RESPONSE: ', response);
