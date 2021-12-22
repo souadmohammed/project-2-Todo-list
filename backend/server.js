@@ -2,6 +2,7 @@
 //node_ modules مجلد فيه كل المكتبات المهمه 
 //  تصدير مكتبه الكسبرس وعمل انستنس منها 
 const express = require('express') 
+const cors = require("cors");
 const app = express() //استخدمت الي استوردته دحين استخدم فنكشن موجوده واخزن قيمتها في متغير
 const port = 5000
 const db = require('./db')
@@ -11,6 +12,7 @@ console.log(Todo);
 
 
 app.use(express.json())
+app.use(cors()); // تخلينا ناخذ بيانات من سيرفر لسيرفر 
 //_________________________middleware_______________________________
 // middleware (read what inside req.body) 
 //نستخدم هذي العمليه قبل تنفيذ اي ريكويست الي داخل الاقواس 
