@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
-import logo from './logo.svg';
+import Todo from "./components/Todo";
+//import Add from "./components/Add";
 import axios, { Axios } from 'axios';
 import './App.css';
 
@@ -7,6 +8,9 @@ function App() {
   
   //Short Cuts ==> useS
   const [tasks, setTasks] = useState([])
+  
+  useEffect(() => {getData();}, []);
+
 
   const getData = () => {
     // should bring data using axios
@@ -24,14 +28,20 @@ function App() {
       });
   };
 
-  const mapOverTasks =tasks.map((taskObj,i)=>{
-     return <p>{taskObj.title}</p>
-  });
+  const mapOverTasks = tasks.map((taskObj, i) => (
+    <Todo
+      key={i}
+      task={taskObj}
+      //deleteTodo={deleteTodo}
+      //toggleTodo={toggleTodo}
+    />
+  ));
+
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        
         <p>
          app
         </p>
