@@ -78,27 +78,89 @@ function App() {
       });
   };
 
+  const deleteCTasks = () => {
+    axios
+      .delete(`http://localhost:5000/tasks`)
+      //     (`http://localhost:5000/tasks/${id}`)
+      .then((response) => {
+        // console.log('RESPONSE: ', response);
+        console.log("DATA: ", response.data);
+        getData();
+        // change react hooks state using spread operator
+      })
+      .catch((err) => {
+        console.log("ERR: ", err);
+      });
+  };
+
+  const deleteTasks = () => {
+    axios
+      .delete(`http://localhost:5000/deleteTasks`)
+      //     (`http://localhost:5000/tasks/${id}`)
+      .then((response) => {
+        // console.log('RESPONSE: ', response);
+        console.log("DATA: ", response.data);
+        getData();
+        // change react hooks state using spread operator
+      })
+      .catch((err) => {
+        console.log("ERR: ", err);
+      });
+  };
+
+  const filterData = (status) => {
+    // should bring data using axios
+    // from backend (GET /tasks)
+    axios
+      .get(`http://localhost:5000/filter?isCompleted=${status}`)
+      .then((response) => {
+        // console.log('RESPONSE: ', response);
+        console.log("DATA: ", response.data);
+        setTasks(response.data);
+      })
+      .catch((err) => {
+        console.log("ERR: ", err);
+      });
+  };
+
 
   const mapOverTasks = tasks.map((taskObj, i) => (
-    <Todo
-      key={i}
-      task={taskObj}
-      deleteTodo={deleteTodo}
-      toggleTodo={toggleTodo}
-    />
+    <Todo key={taskObj._id} task={taskObj}  deleteTodo={deleteTodo} toggleTodo={toggleTodo}/>
   ));
 
 
   return (
     <div className="App">
       <header className="App-header">
-      <p>app</p>
+    <p className="p1">TodoInput</p>
       {/* click on button should bring all Data */}
-      <button onClick={getData}>GET TASKS</button>
+      {/* <button onClick={getData}>GET TASKS</button> */}
       <br/>
       <Add createFunc={postNewTodo} />
       <br/>
+      <p className="p2">TodoList</p>
+      <div class="btn-group">
+        <button class="button" id="b2" onClick={getData}>GET TASKS</button>
+        <button class="button" id="b2" onClick={()=>{filterData(true) }}>GET DONE</button>
+        <button class="button" onClick={()=>{filterData(false) }}>GET PENDING </button>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+
       {mapOverTasks}
+      <br/>
+      <br/>
+      <div class="btn-group2">
+      <button class="button" id="b" onClick={deleteCTasks}>DELETE COMPLETED TASKS</button>
+      <button class="button" onClick={deleteTasks}>DELETE ALL TASKS</button>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      </div>
       </header>
     </div>
   );

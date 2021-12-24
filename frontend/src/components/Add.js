@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { BsFillCalendar2RangeFill } from "react-icons/bs";
 
 export default function Add(props) {
     const [newTitle, setNewTitle] = useState('')
@@ -13,14 +14,19 @@ export default function Add(props) {
     return (
         <div className="Add">
 
-        <input // لازم كل انبوت تكون مربوطه بستيت تخزن فيها القيمه 
+          <div className="s1">
+            <BsFillCalendar2RangeFill size={34} color="rgb(63, 148, 179)"/>
+        <input className="inp1"// لازم كل انبوت تكون مربوطه بستيت تخزن فيها القيمه 
           type="text"
-          placeholder="Write new title here ..."
+          placeholder=" New Todo" 
+          size="50"
           onChange={(e) => { // e كل تفاصيل الايفينت مخزنه فيه 
             setNewTitle(e.target.value);
           }}
-        />
-        <button onClick={createNewTodo}>Create New Todo</button>
+        /></div>
+        
+        <br/>
+        <button className="button1" onClick={createNewTodo}><span>Add New Todo</span></button>
       </div>
     )
 }

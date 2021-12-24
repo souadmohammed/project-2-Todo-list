@@ -158,9 +158,28 @@ app.delete("/tasks/:title", (req, res) => {
   });
 
 
-  app.delete("/deleteCompleted", (req, res) => {
+  app.delete("/tasks", (req, res) => {
     
     Todo.deleteMany({ isCompleted: true}, (err, deleteObj) => {
+      if (err) {
+        console.log("ERROR", err);
+        res.status(500).json("there is a problem in DB");
+      } else {
+        // اذا دورت ومالقت اي واحد بدا الاسم
+        // console.log(deleteObj)
+        if (deleteObj.deletedCount === 0) {
+          res.status(404).json("There is no completed Todo task  Not Found");
+        } else {
+          res.status(200).json("Success Deleted All Completed Todo Task " + deleteObj.deletedCount);
+        }
+      }
+    });
+  }); 
+
+
+  app.delete("/deleteTasks", (req, res) => {
+    
+    Todo.deleteMany({}, (err, deleteObj) => {
       if (err) {
         console.log("ERROR", err);
         res.status(500).json("there is a problem in DB");
