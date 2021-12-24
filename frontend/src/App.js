@@ -142,7 +142,7 @@ function App() {
       <div class="btn-group">
         <button class="button" id="b2" onClick={getData}>GET TASKS</button>
         <button class="button" id="b2" onClick={()=>{filterData(true) }}>GET DONE</button>
-        <button class="button" onClick={()=>{filterData(false) }}>GET PENDING </button>
+        <button class="button" id="b2" onClick={()=>{filterData(false) }}>GET PENDING </button>
       </div>
       <br/>
       <br/>
@@ -152,7 +152,7 @@ function App() {
       <br/>
       <br/>
       <div class="btn-group2">
-      <button class="button" id="b" onClick={deleteCTasks}>DELETE COMPLETED TASKS</button>
+      <button class="button" id="b11" onClick={deleteCTasks}>DELETE COMPLETED TASKS</button>
       <button class="button" onClick={deleteTasks}>DELETE ALL TASKS</button>
       <br/>
       <br/>
