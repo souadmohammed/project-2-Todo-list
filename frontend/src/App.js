@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import Todo from "./components/Todo";
 import Add from "./components/Add";
+import Register from "./components/Register";
 import axios, { Axios } from 'axios';
 import './App.css';
 
@@ -130,6 +131,25 @@ function App() {
   ));
 
 
+  //========================Users===========================
+
+  const register = (body) => {
+    axios
+      .post(`http://localhost:5000/users/register`,body)
+      .then((response) => {
+        // console.log('RESPONSE: ', response);
+        console.log("DATA: ", response.data);
+        // setTasks(response.data);
+        getData();
+        // change react hooks state using spread operator
+      })
+      .catch((err) => {
+        console.log("ERR: ", err);
+      });
+  };
+
+    //=======================================================
+
   return (
     <div className="App">
       <header className="App-header">
@@ -159,6 +179,10 @@ function App() {
       <br/>
       <br/>
       <br/>
+
+      <Register createFunc={register} />
+     
+
       <br/>
       <br/>
       </div>

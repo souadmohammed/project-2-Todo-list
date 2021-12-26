@@ -86,30 +86,6 @@ app.get('/filter',(req,res)=>{
 })
 
 
-app.post('/users/login',(req,res)=>{
-  // حنستخدم الايميل عشان احنا خليناه يونيك 
-  User.find({email:req.body.email},(err,arrUserfound)=>{
-     if(err){
-      console.log('ERROR : ', err)
-     }else{
-       if(arrUserfound.length===1){
-         // we found user
-          if(req.body.password===arrUserfound[0].password){
-            console.log(arrUserfound);
-            res.status(200).json({massage:"user login successfully","User Name ":arrUserfound[0].userName})
-
-          }else{
-            res.status(404).json({massage:"wrong password"})
-          }
-         
-         
-       }else if (arrUserfound.length==0){
-        res.status(404).json({massage:"the email entered is not registered !!"})
-       }
-      
-     } 
-  }) 
-})
 
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -129,25 +105,6 @@ app.post('/tasks',(req,res)=>{
     })
     //res.json('Get / is working ');
 })
-
-
-app.post('/users/register',(req,res)=>{
-  console.log('25:',req.body);
-
-  User.create(req.body,(err,newUser)=>{
-      if(err){
-          console.log('ERROR : ', err);
-          res.status(400).json({message:'This email already taken !!'})
-      }else{
-          res.status(201).json('created new new User successfully')
-          //res.json(newTask);
-      }
-
-  })
-  //res.json('Get / is working ');
-})
-
-
 
 
 
@@ -304,4 +261,54 @@ app.put("/tasks/title/:id", (req, res) => {
   
 app.listen(port,()=>{
     console.log('SERVER IS WORKING');
+})
+
+
+
+
+///==========================USRE============================
+
+
+
+app.post('/users/register',(req,res)=>{
+  console.log('25:',req.body);
+
+  User.create(req.body,(err,newUser)=>{
+      if(err){
+          console.log('ERROR : ', err);
+          res.status(400).json({message:'This email already taken !!'})
+      }else{
+          res.status(201).json('created new new User successfully')
+          //res.json(newTask);
+      }
+
+  })
+  //res.json('Get / is working ');
+})
+
+
+
+app.post('/users/login',(req,res)=>{
+  // حنستخدم الايميل عشان احنا خليناه يونيك 
+  User.find({email:req.body.email},(err,arrUserfound)=>{
+     if(err){
+      console.log('ERROR : ', err)
+     }else{
+       if(arrUserfound.length===1){
+         // we found user
+          if(req.body.password===arrUserfound[0].password){
+            console.log(arrUserfound);
+            res.status(200).json({massage:"user login successfully","User Name ":arrUserfound[0].userName})
+
+          }else{
+            res.status(404).json({massage:"wrong password"})
+          }
+         
+         
+       }else if (arrUserfound.length==0){
+        res.status(404).json({massage:"the email entered is not registered !!"})
+       }
+      
+     } 
+  }) 
 })
