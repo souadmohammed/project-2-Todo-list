@@ -125,6 +125,7 @@ function App() {
 
 
   const mapOverTasks = tasks.map((taskObj, i) => (
+    //عشان اذا انحذف عنصر يجي الي بعده ياخذ الاي دي حقته --- الحل استخدام الايدي حق الاوبجيكت 
     <Todo key={taskObj._id} task={taskObj}  deleteTodo={deleteTodo} toggleTodo={toggleTodo}/>
   ));
 

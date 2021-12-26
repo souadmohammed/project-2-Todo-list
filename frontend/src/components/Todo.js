@@ -2,6 +2,7 @@ import React from 'react'
 import { GoTrashcan } from "react-icons/go";
 
 export default function Todo(props) {
+    
     const { _id, title, isCompleted } = props.task;
     return (
         <div className="Todo">
