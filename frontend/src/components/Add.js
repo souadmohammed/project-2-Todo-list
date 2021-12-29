@@ -15,8 +15,8 @@ export default function Add(props) {
         <div className="Add">
 
           <div className="s1">
-            <BsFillCalendar2RangeFill size={34} color="rgb(63, 148, 179)"/>
-        <input className="inp1"// لازم كل انبوت تكون مربوطه بستيت تخزن فيها القيمه 
+            <BsFillCalendar2RangeFill size={40} color="rgb(63, 148, 179)"/>
+        <input class="form-control"// لازم كل انبوت تكون مربوطه بستيت تخزن فيها القيمه 
           type="text"
           placeholder=" New Todo" 
           size="50"

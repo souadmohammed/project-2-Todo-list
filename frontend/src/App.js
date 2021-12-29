@@ -10,9 +10,13 @@ import "./App.css";
 function App() {
   //Short Cuts ==> useS
   const [tasks, setTasks] = useState([]);
-  const [isLoggedIn, setisLoggedIn] = useState('false')
-  const [username, setusername] = useState('')
+  const [isLoggedIn, setisLoggedIn] = useState("false");
+  const [username, setusername] = useState("");
 
+  const logoutFunc=()=>{
+    setisLoggedIn(false)
+    setusername("")
+  }
   useEffect(() => {
     getData();
   }, []);
@@ -157,15 +161,24 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-         Wellcome {username}
-        </p>
-       <nav className="link">
-         <Link className="link" to='/home'>Home</Link> {"  |  "}
-         <Link className="link" to='/login'>Login</Link>{"  |  "}
-         <Link className="link" to='/register'>Register</Link>
-       </nav>
-       <br/>
+
+        <p className="wellcome"> {username? "Wellcome "+username:"please login"} </p>
+
+
+        <nav className="link">
+          <Link className="link" to="/home">
+            Home
+          </Link>{" "}
+          {"  |  "}
+          <Link className="link" to="/login">
+            Login
+          </Link>
+          {"  |  "}
+          <Link className="link" to="/register">
+            Register
+          </Link>
+        </nav>
+        <br />
         <Routes>
           <Route
             path="/home"
@@ -226,18 +239,20 @@ function App() {
               </div>
             }
           />
-          <Route path="/login" element={<Login  setisLoggedIn={setisLoggedIn} setusername={setusername}/>} />
+          <Route
+            path="/login"
+            element={
+              <Login setisLoggedIn={setisLoggedIn} setusername={setusername} />
+            }
+          />
           <Route
             path="/register"
             element={<Register createFunc={register} />}
           />
         </Routes>
-
-        {/* <Register  />
-      <br/>
-      <br/>
-      <br/>
-      <Login/> */}
+        <br />
+        <br />
+       <button class="btn btn-outline-danger" style={{fontSize:"20px" ,width:"130px"}} onClick={logoutFunc}>Logout</button>
       </header>
     </div>
   );
