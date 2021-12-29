@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import Todo from "./components/Todo";
 import Add from "./components/Add";
 import Register from "./components/Register";
+import Login from "./components/Login";
 import axios, { Axios } from 'axios';
 import './App.css';
 
@@ -181,6 +182,10 @@ function App() {
       <br/>
 
       <Register createFunc={register} />
+      <br/>
+      <br/>
+      <br/>
+      <Login/>
      
 
       <br/>

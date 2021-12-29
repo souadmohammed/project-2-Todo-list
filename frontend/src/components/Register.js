@@ -7,7 +7,7 @@ export default function Register(props) {
     const [password, setpassword] = useState('')
 
 
-    const register=()=>{  
+    const register=(e)=>{  
         e.preventDefault(); // to prevent refresh
         console.log("register new user ");
         // {"title":"task 5","isCompleted": false}
