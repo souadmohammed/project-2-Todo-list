@@ -1,23 +1,19 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Todo from "./components/Todo";
 import Add from "./components/Add";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import axios, { Axios } from 'axios';
-import {
-  Link,
-  Routes,
-  Route
-} from "react-router-dom";
-import './App.css';
+import axios, { Axios } from "axios";
+import { Link, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 function App() {
-  
   //Short Cuts ==> useS
-  const [tasks, setTasks] = useState([])
-  
-  useEffect(() => {getData();}, []);
+  const [tasks, setTasks] = useState([]);
 
+  useEffect(() => {
+    getData();
+  }, []);
 
   const getData = () => {
     // should bring data using axios
@@ -25,7 +21,7 @@ function App() {
     axios
       .get(`http://localhost:5000/tasks`)
       .then((response) => {
-        console.log('RESPONSE: ', response);
+        console.log("RESPONSE: ", response);
         console.log("DATA: ", response.data);
         // اخزن الرسبونس في استيت
         setTasks(response.data);
@@ -35,11 +31,10 @@ function App() {
       });
   };
 
-
   const postNewTodo = (body) => {
     // console.log("func postNewTodo from APP");
     // {"title":"task 5","isCompleted": false}
-    //ارسل الريكويست مع البدي 
+    //ارسل الريكويست مع البدي
     axios
       .post(`http://localhost:5000/tasks`, body)
       .then((response) => {
@@ -53,8 +48,6 @@ function App() {
         console.log("ERR: ", err);
       });
   };
-
-
 
   const deleteTodo = (id) => {
     axios
@@ -130,18 +123,21 @@ function App() {
       });
   };
 
-
   const mapOverTasks = tasks.map((taskObj, i) => (
-    //عشان اذا انحذف عنصر يجي الي بعده ياخذ الاي دي حقته --- الحل استخدام الايدي حق الاوبجيكت 
-    <Todo key={taskObj._id} task={taskObj}  deleteTodo={deleteTodo} toggleTodo={toggleTodo}/>
+    //عشان اذا انحذف عنصر يجي الي بعده ياخذ الاي دي حقته --- الحل استخدام الايدي حق الاوبجيكت
+    <Todo
+      key={taskObj._id}
+      task={taskObj}
+      deleteTodo={deleteTodo}
+      toggleTodo={toggleTodo}
+    />
   ));
-
 
   //========================Users===========================
 
   const register = (body) => {
     axios
-      .post(`http://localhost:5000/users/register`,body)
+      .post(`http://localhost:5000/users/register`, body)
       .then((response) => {
         // console.log('RESPONSE: ', response);
         console.log("DATA: ", response.data);
@@ -154,60 +150,89 @@ function App() {
       });
   };
 
-    //=======================================================
+  //=======================================================
 
   return (
     <div className="App">
       <header className="App-header">
+       <nav className="link">
+         <Link className="link" to='/home'>Home</Link> {"  |  "}
+         <Link className="link" to='/login'>Login</Link>{"  |  "}
+         <Link className="link" to='/register'>Register</Link>
+       </nav>
+       <br/>
+        <Routes>
+          <Route
+            path="/home"
+            element={
+              <div className="Home">
+                <p className="p1">TodoInput</p>
+                {/* click on button should bring all Data */}
+                {/* <button onClick={getData}>GET TASKS</button> */}
+                <br />
+                <Add createFunc={postNewTodo} />
+                <br />
+                <p className="p2">TodoList</p>
+                <div class="btn-group">
+                  <button class="button" id="b2" onClick={getData}>
+                    GET TASKS
+                  </button>
+                  <button
+                    class="button"
+                    id="b2"
+                    onClick={() => {
+                      filterData(true);
+                    }}
+                  >
+                    GET DONE
+                  </button>
+                  <button
+                    class="button"
+                    id="b2"
+                    onClick={() => {
+                      filterData(false);
+                    }}
+                  >
+                    GET PENDING{" "}
+                  </button>
+                </div>
+                <br />
+                <br />
+                <br />
 
-    <Routes>
-      <Route path="/home" element={ <div className='Home'>
-    <p className="p1">TodoInput</p>
-      {/* click on button should bring all Data */}
-      {/* <button onClick={getData}>GET TASKS</button> */}
-      <br/>
-      <Add createFunc={postNewTodo} />
-      <br/>
-      <p className="p2">TodoList</p>
-      <div class="btn-group">
-        <button class="button" id="b2" onClick={getData}>GET TASKS</button>
-        <button class="button" id="b2" onClick={()=>{filterData(true) }}>GET DONE</button>
-        <button class="button" id="b2" onClick={()=>{filterData(false) }}>GET PENDING </button>
-      </div>
-      <br/>
-      <br/>
-      <br/>
+                {mapOverTasks}
+                <br />
+                <br />
+                <div class="btn-group2">
+                  <button class="button" id="b11" onClick={deleteCTasks}>
+                    DELETE COMPLETED TASKS
+                  </button>
+                  <button class="button" onClick={deleteTasks}>
+                    DELETE ALL TASKS
+                  </button>
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                </div>
 
-      {mapOverTasks}
-      <br/>
-      <br/>
-      <div class="btn-group2">
-      <button class="button" id="b11" onClick={deleteCTasks}>DELETE COMPLETED TASKS</button>
-      <button class="button" onClick={deleteTasks}>DELETE ALL TASKS</button>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      </div>
+                <br />
+                <br />
+              </div>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/register"
+            element={<Register createFunc={register} />}
+          />
+        </Routes>
 
-      
-     
-
-      <br/>
-      <br/>
-      </div>} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register createFunc={register}/>} />
-    </Routes>
-
-      {/* <Register  />
+        {/* <Register  />
       <br/>
       <br/>
       <br/>
       <Login/> */}
-
-
- 
       </header>
     </div>
   );
