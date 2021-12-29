@@ -4,6 +4,11 @@ import Add from "./components/Add";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import axios, { Axios } from 'axios';
+import {
+  Link,
+  Routes,
+  Route
+} from "react-router-dom";
 import './App.css';
 
 function App() {
@@ -154,6 +159,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+
+    <Routes>
+      <Route path="/home" element={ <div className='Home'>
     <p className="p1">TodoInput</p>
       {/* click on button should bring all Data */}
       {/* <button onClick={getData}>GET TASKS</button> */}
@@ -180,17 +188,26 @@ function App() {
       <br/>
       <br/>
       <br/>
+      </div>
 
-      <Register createFunc={register} />
-      <br/>
-      <br/>
-      <br/>
-      <Login/>
+      
      
 
       <br/>
       <br/>
-      </div>
+      </div>} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register createFunc={register}/>} />
+    </Routes>
+
+      {/* <Register  />
+      <br/>
+      <br/>
+      <br/>
+      <Login/> */}
+
+
+ 
       </header>
     </div>
   );
