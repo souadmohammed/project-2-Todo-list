@@ -298,7 +298,7 @@ app.post('/users/login',(req,res)=>{
          // we found user
           if(req.body.password===arrUserfound[0].password){
             console.log(arrUserfound);
-            res.status(200).json({massage:"user login successfully","User Name ":arrUserfound[0].userName})
+            res.status(200).json({massage:"user login successfully",UserName:arrUserfound[0].userName})
 
           }else{
             res.status(404).json({massage:"wrong password"})

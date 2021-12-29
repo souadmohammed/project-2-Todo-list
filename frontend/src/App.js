@@ -10,6 +10,8 @@ import "./App.css";
 function App() {
   //Short Cuts ==> useS
   const [tasks, setTasks] = useState([]);
+  const [isLoggedIn, setisLoggedIn] = useState('false')
+  const [username, setusername] = useState('')
 
   useEffect(() => {
     getData();
@@ -155,6 +157,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <p>
+         Wellcome {username}
+        </p>
        <nav className="link">
          <Link className="link" to='/home'>Home</Link> {"  |  "}
          <Link className="link" to='/login'>Login</Link>{"  |  "}
@@ -221,7 +226,7 @@ function App() {
               </div>
             }
           />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login  setisLoggedIn={setisLoggedIn} setusername={setusername}/>} />
           <Route
             path="/register"
             element={<Register createFunc={register} />}
