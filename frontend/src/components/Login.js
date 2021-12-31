@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 export default function Login(props) {
   const [email, setemail] = useState("q@q.com");
   const [password, setpassword] = useState("123");
+  const [loginMassage, setloginMassage] = useState("");
+  const [loginStatus, setloginStatus] = useState(0);
+  // 200 || 400 || 404
 
   const loginFunc = (e) => {
     e.preventDefault();
@@ -18,17 +21,24 @@ export default function Login(props) {
     axios
       .post(`http://localhost:5000/users/login`, userInfo)
       .then((response) => {
+        setloginStatus(response.status);
+        setloginMassage(response.data.massage);
+        console.log(response.data.massage);
+
         console.log("DATA: ", response.data);
         props.setisLoggedIn(true);
         props.setusername(response.data.UserName);
       })
       .catch((err) => {
         console.log("ERR: ", err);
+        console.log(err.response.data.massage);
+        setloginStatus(err.response.status);
+        setloginMassage(err.response.data.massage);
       });
   };
   return (
-    <div>
-      <form action="">
+    <div class="d-flex justify-content-center">
+      <form action="" >
         <label htmlFor="email">Email : </label>
         <input
           class="form-control"
@@ -41,9 +51,7 @@ export default function Login(props) {
           }}
           value={email}
         />
-       
         <br />
-
         <label htmlFor="password">password : </label>
         <input
           class="form-control"
@@ -56,17 +64,27 @@ export default function Login(props) {
           }}
           value={password}
         />
-
         <br />
-        
         <button class="btn btn-outline-secondary" onClick={loginFunc}>
           Login
-        </button>  <Link className="link" style={{marginLeft: "30px"}} to="/Register">
-        Don't Have An Account?
-      </Link>
+        </button>{" "}
+        <Link className="link" style={{ marginLeft: "30px" }} to="/Register">
+          Don't Have An Account?
+        </Link>
+        <br />
+        <br />
+        <br />
+        {loginStatus === 200 && (
+          <div class="alert alert-success text-center" role="alert">
+            {loginMassage}
+          </div>
+        )}
+        {(loginStatus === 400 || loginStatus === 404) && (
+          <div class="alert alert-danger text-center" role="alert">
+            {loginMassage}
+          </div>
+        )}
       </form>
-      
-    
     </div>
   );
 }

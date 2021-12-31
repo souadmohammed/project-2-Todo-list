@@ -35,7 +35,7 @@ export default function Register(props) {
   //   };
 
   return (
-    <div>
+    <div class="d-flex justify-content-center">
       <form class="row g-3 m-5" style={{marginLeft: "90px" ,marginRight: "90px" ,marginBottom: "5px"}}>
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">
@@ -85,8 +85,8 @@ export default function Register(props) {
           />
         </div>
         <div class="col-12">
-          <button type="submit" class="btn btn-outline-secondary">
-            Sign in
+          <button type="submit" class="btn btn-outline-secondary" onClick={register}>
+            Sign up
           </button>
           <Link className="link" to="/Login" style={{marginLeft: "30px"}}>
            Have An Account ?

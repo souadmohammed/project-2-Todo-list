@@ -2,7 +2,7 @@
 //node_ modules مجلد فيه كل المكتبات المهمه 
 //  تصدير مكتبه الكسبرس وعمل انستنس منها 
 const express = require('express') 
-const cors = require("cors");
+const cors = require("cors"); 
 const app = express() //استخدمت الي استوردته دحين استخدم فنكشن موجوده واخزن قيمتها في متغير
 const port = 5000
 const db = require('./db')
@@ -210,7 +210,7 @@ app.delete("/tasks/:title", (req, res) => {
 // Extension: Prettier  ||  Shortcut: Alt + Shift + F
 // حطينا / قبل الافنيم عشانها مو متغير والقيمه حتكون في البدي حق الريكويست
 
-// UPDATE STATE
+// UPDATE isCompleted
 app.put("/tasks/:id/:isCompleted", (req, res) => {
     console.log("1213",req.params);
     Todo.updateOne(
